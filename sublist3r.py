@@ -468,6 +468,7 @@ class BaiduEnum(enumratorBaseThreaded):
     def extract_domains(self, resp):
         found_newdomain = False
         subdomain_list = []
+        links = []
         link_regx = re.compile('<a.*?class="c-showurl".*?>(.*?)</a>')
         try:
             links = link_regx.findall(resp)
@@ -661,7 +662,7 @@ class DNSdumpster(enumratorBaseThreaded):
         links = []
         try:
             results_tbl = tbl_regex.findall(resp)[0]
-        except IndexError:
+        except (IndexError, TypeError):
             results_tbl = ''
         links_list = link_regex.findall(results_tbl)
         links = list(set(links_list))
